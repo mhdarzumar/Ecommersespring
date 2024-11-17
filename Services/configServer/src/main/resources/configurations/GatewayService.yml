@@ -1,0 +1,30 @@
+server:
+  port: 8222  # Port for the Gateway
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # Enable service discovery with Eureka
+      routes:
+        - id: CustomerService
+          uri: lb://CUSTOMERSERVICE  # Load balanced URI for CustomerService
+          predicates:
+            - Path=/api/v1/customers/**  # Route for customer-related requests
+        - id: OrderService
+          uri: lb://ORDERSERVICE  # Load balanced URI for OrderService
+          predicates:
+            - Path=/api/v1/orders/**  # Route for order-related requests
+        - id: OrderLinesService
+          uri: lb://ORDERSERVICE  # Load balanced URI for OrderLinesService
+          predicates:
+            - Path=/api/v1/order-lines/**  # Route for order lines-related requests
+        - id: ProductService
+          uri: lb://PRODUCTSERVICE  # Load balanced URI for ProductService
+          predicates:
+            - Path=/api/v1/products/**  # Route for product-related requests
+        - id: PaymentService
+          uri: lb://PAYMENTSERVICE  # Load balanced URI for PaymentService
+          predicates:
+            - Path=/api/v1/payments/**  # Route for payment-related requests
